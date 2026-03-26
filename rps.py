@@ -19,72 +19,58 @@ roundCounter = 0
 print('')
 print(ascii_banner)
 
-"""
---------------------------------------------------------------------------
-This code was AI-generated on 2026-03-22
-Claude link: https://claude.ai/share/6468d72f-5933-4119-aad9-c6c4b570ed23
----------------------------------------------------------------------------
-"""
-while True:
+def get_player_choice():
+    global hand_gestures
+    global roundCounter
     while True:
-        playerChoice = input('Rock, Paper, or Scissors?\n').lower()
-        if playerChoice in (hand_gestures):
+        choice = input('What will you pick?\n').lower()
+        if choice in hand_gestures:
             roundCounter += 1
-            break
+            return choice
         else:
-            print('Invalid choice. Try again.')
-    """
-    End of Ai Generation
-    """
+             print('Invalid choice. Try again.')    
 
-    computerChoice = random.choice(hand_gestures)
+computerChoice = random.choice(hand_gestures)
 
-    '''
-    if playerChoice.lower() != 'rock' and playerChoice.lower() != 'paper' and playerChoice.lower() != 'scissors' and playerChoice.lower() != 'lizard' and playerChoice.lower() != 'spock':
-        print('Invalid choice. Try again.')
-        sys.exit()
-    '''
+print('')
+print('You chose: ' + playerChoice)
+print('Computer chose: ' + computerChoice)
+print('')
 
-    print('')
-    print('You chose: ' + playerChoice)
-    print('Computer chose: ' + computerChoice)
-    print('')
+if playerChoice.lower() == 'rock'.lower() and computerChoice == 'scissors':
+    print('🎉You win!')
+    winsCounter += 1
+elif playerChoice.lower() == 'paper'.lower() and computerChoice == 'rock':
+    print('🎉You win!')
+    winsCounter += 1
+elif playerChoice.lower() == 'scissors'.lower() and computerChoice == 'paper':
+    print('🎉You win!')
+    winsCounter += 1
+elif playerChoice.lower() == 'lizard'.lower() and computerChoice == 'paper':
+    print('🎉You win!')
+    winsCounter += 1
+elif playerChoice.lower() == 'lizard'.lower() and computerChoice == 'spock':
+    print('🎉You win!')
+    winsCounter += 1
+elif playerChoice.lower() == 'spock'.lower() and computerChoice == 'rock':
+    print('🎉You win!')
+    winsCounter += 1
+elif playerChoice.lower() == 'spock'.lower() and computerChoice == 'scissors':
+    print('🎉You win!')
+    winsCounter += 1
+elif playerChoice.lower() == computerChoice:
+    print('It\'s a tie!')
+else:
+    print('💻 Computer wins!')
 
-    if playerChoice.lower() == 'rock'.lower() and computerChoice == 'scissors':
-        print('🎉You win!')
-        winsCounter += 1
-    elif playerChoice.lower() == 'paper'.lower() and computerChoice == 'rock':
-        print('🎉You win!')
-        winsCounter += 1
-    elif playerChoice.lower() == 'scissors'.lower() and computerChoice == 'paper':
-        print('🎉You win!')
-        winsCounter += 1
-    elif playerChoice.lower() == 'lizard'.lower() and computerChoice == 'paper':
-        print('🎉You win!')
-        winsCounter += 1
-    elif playerChoice.lower() == 'lizard'.lower() and computerChoice == 'spock':
-        print('🎉You win!')
-        winsCounter += 1
-    elif playerChoice.lower() == 'spock'.lower() and computerChoice == 'rock':
-        print('🎉You win!')
-        winsCounter += 1
-    elif playerChoice.lower() == 'spock'.lower() and computerChoice == 'scissors':
-        print('🎉You win!')
-        winsCounter += 1
-    elif playerChoice.lower() == computerChoice:
-        print('It\'s a tie!')
+while True:
+    playerAnswer = input("Try again? (yes/no)\n").lower().strip()
+    if playerAnswer == "no".lower() or playerAnswer == "n".lower():
+        print("Thanks for playing!")
+        print(f"Rounds played: {roundCounter}")
+        print(f"Rounds won: {winsCounter}")
+        break
+    elif playerAnswer == "yes".lower() or playerAnswer == "y".lower():
+        break
     else:
-        print('💻 Computer wins!')
-
-    while True:
-        try:
-            playerAnswer = input("Try again? (yes/no)\n").lower().strip()
-            if playerAnswer == "no".lower() or playerAnswer == "n".lower():
-                print("Thanks for playing!")
-                print(f"Rounds played: {roundCounter}")
-                print(f"Rounds won: {winsCounter}")
-                break
-            else:
-                
-        except ValueError:
-            print("Invalid input, try again")
+        print("Enter only yes or no")        
