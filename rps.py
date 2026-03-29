@@ -25,52 +25,49 @@ def get_player_choice():
     while True:
         choice = input('What will you pick?\n').lower()
         if choice in hand_gestures:
-            roundCounter += 1
             return choice
         else:
              print('Invalid choice. Try again.')    
 
-computerChoice = random.choice(hand_gestures)
 
-print('')
-print('You chose: ' + playerChoice)
-print('Computer chose: ' + computerChoice)
-print('')
-
-if playerChoice.lower() == 'rock'.lower() and computerChoice == 'scissors':
-    print('🎉You win!')
-    winsCounter += 1
-elif playerChoice.lower() == 'paper'.lower() and computerChoice == 'rock':
-    print('🎉You win!')
-    winsCounter += 1
-elif playerChoice.lower() == 'scissors'.lower() and computerChoice == 'paper':
-    print('🎉You win!')
-    winsCounter += 1
-elif playerChoice.lower() == 'lizard'.lower() and computerChoice == 'paper':
-    print('🎉You win!')
-    winsCounter += 1
-elif playerChoice.lower() == 'lizard'.lower() and computerChoice == 'spock':
-    print('🎉You win!')
-    winsCounter += 1
-elif playerChoice.lower() == 'spock'.lower() and computerChoice == 'rock':
-    print('🎉You win!')
-    winsCounter += 1
-elif playerChoice.lower() == 'spock'.lower() and computerChoice == 'scissors':
-    print('🎉You win!')
-    winsCounter += 1
-elif playerChoice.lower() == computerChoice:
-    print('It\'s a tie!')
-else:
-    print('💻 Computer wins!')
 
 while True:
-    playerAnswer = input("Try again? (yes/no)\n").lower().strip()
-    if playerAnswer == "no".lower() or playerAnswer == "n".lower():
-        print("Thanks for playing!")
-        print(f"Rounds played: {roundCounter}")
-        print(f"Rounds won: {winsCounter}")
-        break
-    elif playerAnswer == "yes".lower() or playerAnswer == "y".lower():
-        break
+    playerChoice = get_player_choice()
+    computerChoice = random.choice(hand_gestures)
+    roundCounter += 1
+
+    print('')
+    print('You chose: ' + playerChoice)
+    print('Computer chose: ' + computerChoice)
+    print('')
+    
+    wins = [
+        ('rock', 'scissors'),
+        ('paper', 'rock'),
+        ('scissors', 'paper'),
+        ('lizard', 'paper'),
+        ('lizard', 'spock'),
+        ('spock', 'rock'),
+        ('spock', 'scissors'),
+    ]
+
+    if (playerChoice, computerChoice) in wins:
+        print('🎉 You win!')
+        winsCounter += 1
+    elif playerChoice == computerChoice:
+        print('It\'s a tie!')
     else:
-        print("Enter only yes or no")        
+        print('💻 Computer wins!')
+
+    while True:
+        playerAnswer = input("Try again? (yes/no)\n").lower().strip()
+        if playerAnswer in ("no", "n"):
+            print("Thanks for playing!")
+            print(f"Rounds played: {roundCounter}")
+            print(f"Rounds won: {winsCounter}")
+            sys.exit()
+            break
+        elif playerAnswer in ("yes", "y"):
+            break
+        else:
+            print("Enter only yes or no")        
