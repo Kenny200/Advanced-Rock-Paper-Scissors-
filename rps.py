@@ -2,6 +2,9 @@ import sys
 import random
 #from colorama import init, Fore, Back, Style
 
+#TODO: Add color to the text using colorama
+#TODO: Difficulty modes
+
 ascii_banner = r"""
      _       _                               _   ____  ____  ____  
     / \   __| |_   ____ _ _ __   ___ ___  __| | |  _ \|  _ \/ ___| 
@@ -12,7 +15,10 @@ ascii_banner = r"""
 
 """
 
-hand_gestures = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+hand_gestures = []
+classic_mode_list = ['rock', 'paper', 'scissors']  
+BBT_mode_list = ['rock', 'paper', 'scissors', 'lizard', 'spock']
+rps7_mode_list = ['rock', 'paper', 'scissors', 'fire', 'water', 'air', 'sponge']
 winsCounter = 0
 roundCounter = 0
 
@@ -28,8 +34,31 @@ def get_player_choice():
             return choice
         else:
              print('Invalid choice. Try again.')    
+             
+def select_game_mode():
+    global hand_gestures
+    global classic_mode_list
+    global BBT_mode_list
+    global rps7_mode_list
+    while True:
+        mode =input('Select difficulty: ').lower()
+        match mode:
+            case 'classic':
+                hand_gestures = classic_mode_list
+                print('Classic mode selected')
+                break
+            case 'bbt':
+                hand_gestures = BBT_mode_list
+                print('Bigger Better Than mode selected')
+                break
+            case 'rps7':
+                hand_gestures = rps7_mode_list
+                print('RPS7 mode selected')
+                break
+            case _:
+                print('Invalid choice. Try again.')
 
-
+select_game_mode()
 
 while True:
     playerChoice = get_player_choice()
@@ -58,16 +87,19 @@ while True:
         print('It\'s a tie!')
     else:
         print('💻 Computer wins!')
+        
 
     while True:
-        playerAnswer = input("Try again? (yes/no)\n").lower().strip()
-        if playerAnswer in ("no", "n"):
+        playerAnswer = input("Try again or return to menu?\n").lower().strip()
+        if playerAnswer == "no".lower():
             print("Thanks for playing!")
             print(f"Rounds played: {roundCounter}")
             print(f"Rounds won: {winsCounter}")
             sys.exit()
+        elif playerAnswer == "again".lower():
             break
-        elif playerAnswer in ("yes", "y"):
+        elif playerAnswer == "back".lower():   
             break
-        else:
-            print("Enter only yes or no")        
+        
+    if playerAnswer == "back".lower():
+        break    
