@@ -2,8 +2,12 @@ import sys
 import random
 #from colorama import init, Fore, Back, Style
 
-#TODO: Add color to the text using colorama
-#TODO: Difficulty modes
+'''
+Todo:
+Add color to the banner using colorama
+Fix the logic error
+'''
+
 
 ascii_banner = r"""
      _       _                               _   ____  ____  ____  
@@ -16,51 +20,50 @@ ascii_banner = r"""
 """
 
 hand_gestures = []
-classic_mode_list = ['rock', 'paper', 'scissors']  
-BBT_mode_list = ['rock', 'paper', 'scissors', 'lizard', 'spock']
-rps7_mode_list = ['rock', 'paper', 'scissors', 'fire', 'water', 'air', 'sponge']
+classic_mode = ['rock', 'paper', 'scissors']
+BBT_mode = classic_mode + ['lizard', 'spock']
+rps7_mode = classic_mode + ['fire', 'water', 'air', 'sponge']
 winsCounter = 0
 roundCounter = 0
 
 print('')
-print(ascii_banner)
-
-def get_player_choice():
+print(ascii_banner)   
+             
+def select_game_mode():
     global hand_gestures
+    global classic_mode_set
+    global BBT_mode_set
+    global rps7_mode_set
+    while True:
+        mode = input('Select mode: ').lower()
+        match mode.lower():
+            case 'classic':
+                hand_gestures = classic_mode
+                print('Classic mode selected')
+                break
+            case 'Big Bang theory' | 'BBT':
+                hand_gestures = BBT_mode
+                print('Big Bang theory mode selected')
+                break
+            case 'rps7':
+                hand_gestures = rps7_mode
+                print('RPS7 mode selected')
+                break
+            case _:
+                print('Invalid choice. Try again.')
+                
+def get_player_choice():
+    hand_gestures
     global roundCounter
     while True:
         choice = input('What will you pick?\n').lower()
         if choice in hand_gestures:
             return choice
         else:
-             print('Invalid choice. Try again.')    
-             
-def select_game_mode():
-    global hand_gestures
-    global classic_mode_list
-    global BBT_mode_list
-    global rps7_mode_list
-    while True:
-        mode =input('Select difficulty: ').lower()
-        match mode:
-            case 'classic':
-                hand_gestures = classic_mode_list
-                print('Classic mode selected')
-                break
-            case 'bbt':
-                hand_gestures = BBT_mode_list
-                print('Bigger Better Than mode selected')
-                break
-            case 'rps7':
-                hand_gestures = rps7_mode_list
-                print('RPS7 mode selected')
-                break
-            case _:
-                print('Invalid choice. Try again.')
-
-select_game_mode()
+             print('Invalid choice. Try again.') 
 
 while True:
+    setgamemode = select_game_mode()
     playerChoice = get_player_choice()
     computerChoice = random.choice(hand_gestures)
     roundCounter += 1
@@ -90,16 +93,15 @@ while True:
         
 
     while True:
-        playerAnswer = input("Try again or return to menu?\n").lower().strip()
-        if playerAnswer == "no".lower():
+        playerAnswer = input("Try again? (yes/no)\n").lower().strip()
+        playerChoice = get_player_choice()
+        if playerAnswer in ("no", "n"):
             print("Thanks for playing!")
             print(f"Rounds played: {roundCounter}")
             print(f"Rounds won: {winsCounter}")
             sys.exit()
-        elif playerAnswer == "again".lower():
             break
-        elif playerAnswer == "back".lower():   
+        elif playerAnswer in ("yes", "y"):
             break
-        
-    if playerAnswer == "back".lower():
-        break    
+        else:
+            print("Enter only yes or no")   
